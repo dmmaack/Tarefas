@@ -18,6 +18,7 @@
                 <th>@Html.DisplayNameFor(model => model.Nome)</th>
                 <th>@Html.DisplayNameFor(model => model.DataConclusao)</th>
                 <th>@Html.DisplayNameFor(model => model.EstaCompleta)</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +27,12 @@
                 <th>@Html.DisplayFor(modelItem => item.Id)</th>
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.DataConclusao)</td>
-                <th>@Html.DisplayFor(modelItem => item.EstaCompleta)</th>
+                <td>@Html.DisplayFor(modelItem => item.EstaCompleta)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                </td>
             </tr>
         }
         </tbody>

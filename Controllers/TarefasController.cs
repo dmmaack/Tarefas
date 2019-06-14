@@ -43,5 +43,64 @@ namespace Tarefas.Controllers
 
             return View(tarefa);
         }
+
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var tarefa = await _context.Tarefas.SingleOrDefaultAsync(s => s.Id == id);
+
+            if (tarefa == null)
+                return NotFound();
+
+            return View(tarefa);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit([Bind("Id,Nome,DataConclusao,EstaCompleta")] TarefaItem tarefa)
+        {
+            if (tarefa == null)
+                return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(tarefa);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    if(!ContatoExiste(tarefa.Id))
+                        return NotFound();
+                    else
+                        throw ex;
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(tarefa);
+        }
+
+        private bool ContatoExiste(Guid id){
+            return _context.Tarefas.Any(a => a.Id == id);
+        }
+
+        [HttpGet, ActionName("Delete")]
+        public async Task<IActionResult> Delete (Guid? id)
+        {
+            var tarefa = await _context.Tarefas.SingleOrDefaultAsync(s => s.Id == id);
+
+            if(tarefa == null)
+                return NotFound();
+            
+            _context.Tarefas.Remove(tarefa);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
+        }
     }
 }

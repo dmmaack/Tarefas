@@ -2993,6 +2993,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "Views\\Tarefas\\Edit.cshtml",
+      "TargetPath": "Views\\Tarefas\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "Views\\Tarefas\\Create.cshtml",
       "TargetPath": "Views\\Tarefas\\Create.cshtml",
       "FileKind": "mvc"
