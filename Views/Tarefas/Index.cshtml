@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<Tarefas.Models.TarefaItem>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h2>@ViewData["title"]</h2>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>
+        <a asp-action="Create">Criar Novo Contato</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.DataConclusao)</th>
+                <th>@Html.DisplayNameFor(model => model.EstaCompleta)</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(var item in Model){
+            <tr>
+                <th>@Html.DisplayFor(modelItem => item.Id)</th>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.DataConclusao)</td>
+                <th>@Html.DisplayFor(modelItem => item.EstaCompleta)</th>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

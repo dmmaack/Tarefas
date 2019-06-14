@@ -31,3 +31,5 @@ C:\Users\danielmaack\Documents\Desenvolvimento\AspNetCore\Tarefas\obj\Debug\netc
 C:\Users\danielmaack\Documents\Desenvolvimento\AspNetCore\Tarefas\obj\Debug\netcoreapp2.2\Tarefas.dll
 C:\Users\danielmaack\Documents\Desenvolvimento\AspNetCore\Tarefas\obj\Debug\netcoreapp2.2\Tarefas.pdb
 C:\Users\danielmaack\Documents\Desenvolvimento\AspNetCore\Tarefas\obj\Debug\netcoreapp2.2\Tarefas.csproj.CopyComplete
+C:\Users\danielmaack\Documents\Desenvolvimento\AspNetCore\Tarefas\obj\Debug\netcoreapp2.2\Razor\Views\Tarefas\Index.g.cshtml.cs
+C:\Users\danielmaack\Documents\Desenvolvimento\AspNetCore\Tarefas\obj\Debug\netcoreapp2.2\Razor\Views\Tarefas\Create.g.cshtml.cs
