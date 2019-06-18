@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Tarefas.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tarefas.Services;
 
 namespace Tarefas
 {
@@ -28,8 +29,6 @@ namespace Tarefas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -46,6 +45,10 @@ namespace Tarefas
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            
+            services.AddTransient<ITarefaItemService, TempTarefaItemService>();
+            services.AddTransient<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

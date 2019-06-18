@@ -7,23 +7,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tarefas.Data;
 using Tarefas.Models;
+using Tarefas.Services;
 
 namespace Tarefas.Controllers
 {
     public class TarefasController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private ITarefaItemService _tarefaService;
 
-        public TarefasController(ApplicationDbContext context)
+        public TarefasController(ITarefaItemService tarefaService)
         {
-            _context = context;
+            _tarefaService = tarefaService;
         }
 
 
         //Lista de Tarefas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tarefas.ToListAsync());
+            var tarefas = _tarefaService.GetItensAsync();
+            return View(await tarefas);
         }
 
         public IActionResult Create()
@@ -36,9 +38,11 @@ namespace Tarefas.Controllers
         {
             if (ModelState.IsValid)
             {
-                this._context.Add(tarefa);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var isOk = await _tarefaService.AdicionarItem(tarefa);
+                if (isOk)
+                    return RedirectToAction("Index");
+
+                return NotFound();
             }
 
             return View(tarefa);
@@ -49,7 +53,7 @@ namespace Tarefas.Controllers
             if (id == null)
                 return NotFound();
 
-            var tarefa = await _context.Tarefas.SingleOrDefaultAsync(s => s.Id == id);
+            var tarefa = await _tarefaService.GetItemAsync(id);
 
             if (tarefa == null)
                 return NotFound();
@@ -65,18 +69,8 @@ namespace Tarefas.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(tarefa);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    if(!ContatoExiste(tarefa.Id))
-                        return NotFound();
-                    else
-                        throw ex;
-                }
+                try { await _tarefaService.EditarItem(tarefa); }
+                catch { return NotFound(); }
 
                 return RedirectToAction("Index");
             }
@@ -84,20 +78,16 @@ namespace Tarefas.Controllers
             return View(tarefa);
         }
 
-        private bool ContatoExiste(Guid id){
-            return _context.Tarefas.Any(a => a.Id == id);
-        }
-
         [HttpGet, ActionName("Delete")]
-        public async Task<IActionResult> Delete (Guid? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            var tarefa = await _context.Tarefas.SingleOrDefaultAsync(s => s.Id == id);
+            var retorno = false;
 
-            if(tarefa == null)
+            try { retorno = await _tarefaService.DeletarItem(id); }
+            catch { return NotFound(); }
+
+            if(!retorno)
                 return NotFound();
-            
-            _context.Tarefas.Remove(tarefa);
-            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
 
