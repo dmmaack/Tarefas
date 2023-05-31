@@ -12,6 +12,7 @@ namespace Tarefas
 {
     public class Program
     {
+        // novo texto comentario adicionado
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
